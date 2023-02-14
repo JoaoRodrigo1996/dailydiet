@@ -19,7 +19,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      {!isFontsLoaded ? <Home /> : <Loading />}
+      {isFontsLoaded ? <Home /> : <Loading />}
       <StatusBar
         barStyle="dark-content"
         backgroundColor="transparent"
