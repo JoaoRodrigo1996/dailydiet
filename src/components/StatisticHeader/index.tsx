@@ -1,4 +1,5 @@
 import { BackButton } from "../BackButton";
+
 import { Container, SubTitle, Title } from "./styles";
 
 export function StatisticHeader() {

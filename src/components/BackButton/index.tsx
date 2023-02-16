@@ -2,10 +2,10 @@ import { TouchableOpacityProps } from "react-native";
 import { Container, Icon } from "./styles";
 
 interface BackButtonProps extends TouchableOpacityProps {
-  type: "PRIMARY" | "SECONDARY";
+  type?: "PRIMARY" | "SECONDARY";
 }
 
-export function BackButton({ type, ...rest }: BackButtonProps) {
+export function BackButton({ type = "PRIMARY", ...rest }: BackButtonProps) {
   return (
     <Container {...rest}>
       <Icon type={type} />
