@@ -1,20 +1,18 @@
 import { View } from "react-native";
 import { Button } from "../../components/Button";
+import { Input } from "../../components/Input";
 
 import {
   BackButton,
   ButtonContainer,
   Container,
   Content,
-  DateContainer,
   DateTimeContainer,
   Form,
   Header,
   Icon,
   InputContainer,
-  InputText,
   Label,
-  TimeContainer,
   Title,
 } from "./styles";
 
@@ -30,26 +28,16 @@ export function NewDiet() {
       </Header>
       <Content contentContainerStyle={{ paddingBottom: 100 }}>
         <Form>
-          <InputContainer>
-            <Label>Nome</Label>
-            <InputText />
-          </InputContainer>
-          <InputContainer>
-            <Label>Descrição</Label>
-            <InputText style={{ height: 120 }} />
-          </InputContainer>
+          <Input label="Nome" />
+          <Input label="Descrição" size={120} />
+
           <DateTimeContainer>
-            <DateContainer>
-              <Label>Data</Label>
-              <InputText />
-            </DateContainer>
-            <TimeContainer>
-              <Label>Hora</Label>
-              <InputText />
-            </TimeContainer>
+            <Input label="Data" style={{ marginRight: 12 }} />
+            <Input label="Hora" />
           </DateTimeContainer>
+
           <InputContainer>
-            <Label>Está dentro da dieta</Label>
+            <Label>Está dentro da dieta?</Label>
             <ButtonContainer>
               <Button
                 variant="GREEN"

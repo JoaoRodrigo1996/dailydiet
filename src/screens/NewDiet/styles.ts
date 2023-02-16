@@ -61,26 +61,10 @@ export const Label = styled.Text`
   margin-bottom: 4px;
 `;
 
-export const InputText = styled.TextInput`
-  border: 1px solid ${({ theme }) => theme.COLORS.GRAY_500};
-  height: 48px;
-  padding: 16px;
-  border-radius: 8px;
-`;
-
 export const DateTimeContainer = styled.View`
+  flex: 1;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 24px;
-`;
-
-export const DateContainer = styled.View`
-  flex: 1;
-  margin-right: 20px;
-`;
-
-export const TimeContainer = styled.View`
-  flex: 1;
 `;
 
 export const ButtonContainer = styled.View`
