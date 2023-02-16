@@ -3,15 +3,25 @@ import { Container, Icon, SubTitle, Title } from "./styles";
 
 interface SummaryProps extends TouchableOpacityProps {
   title: string;
+  subtitle: string;
+  showIcon?: boolean;
+  size?: "NORMAL" | "LARGE";
   type: "PRIMARY" | "SECONDARY";
 }
 
-export function Summary({ title, type, ...rest }: SummaryProps) {
+export function Summary({
+  title,
+  type,
+  subtitle,
+  size = "LARGE",
+  showIcon = false,
+  ...rest
+}: SummaryProps) {
   return (
     <Container type={type} {...rest}>
-      <Icon type={type} />
-      <Title>{title}</Title>
-      <SubTitle>das refeições dentro da dieta</SubTitle>
+      {showIcon && <Icon type={type} />}
+      <Title size={size}>{title}</Title>
+      <SubTitle>{subtitle}</SubTitle>
     </Container>
   );
 }
