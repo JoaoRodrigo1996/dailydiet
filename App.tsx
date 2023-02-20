@@ -7,7 +7,7 @@ import { StatusBar } from "react-native";
 import { ThemeProvider } from "styled-components/native";
 import { Loading } from "./src/components/Loading";
 
-import { Feedback } from "./src/screens/Feedback";
+import { Routes } from "./src/routes";
 
 import theme from "./src/theme";
 
@@ -19,7 +19,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      {isFontsLoaded ? <Feedback /> : <Loading />}
+      {isFontsLoaded ? <Routes /> : <Loading />}
       <StatusBar
         barStyle="dark-content"
         backgroundColor="transparent"
