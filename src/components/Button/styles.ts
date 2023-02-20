@@ -5,7 +5,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 interface ButtonStyleProps {
   type: "PRIMARY" | "SECONDARY";
-  variantColor?: "GREEN" | "RED";
 }
 
 interface IconStyleProps {
@@ -22,7 +21,7 @@ export const Container = styled(TouchableOpacity)<ButtonStyleProps>`
   flex: 1;
   border-radius: 8px;
 
-  ${({ theme, type, variantColor }) =>
+  ${({ theme, type }) =>
     type === "PRIMARY"
       ? css`
           background-color: ${theme.COLORS.GRAY_200};

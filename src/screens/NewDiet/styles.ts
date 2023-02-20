@@ -67,6 +67,6 @@ export const DateTimeContainer = styled.View`
   align-items: center;
 `;
 
-export const ButtonContainer = styled.View`
+export const OptionContainer = styled.View`
   flex-direction: row;
 `;

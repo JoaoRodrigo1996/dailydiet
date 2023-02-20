@@ -1,10 +1,12 @@
+import { useState } from "react";
+
 import { View } from "react-native";
 import { Button } from "../../components/Button";
-import { Input } from "../../components/Input";
+import { Input } from "../../components/Form/Input";
+import { Options } from "../../components/Form/Options";
 
 import {
   BackButton,
-  ButtonContainer,
   Container,
   Content,
   DateTimeContainer,
@@ -13,10 +15,15 @@ import {
   Icon,
   InputContainer,
   Label,
+  OptionContainer,
   Title,
 } from "./styles";
 
 export function NewDiet() {
+  const [buttonVariant, setButtonVariant] = useState<"IN" | "OUT" | "DEFAULT">(
+    "DEFAULT"
+  );
+
   return (
     <Container>
       <Header>
@@ -38,23 +45,23 @@ export function NewDiet() {
 
           <InputContainer>
             <Label>Está dentro da dieta?</Label>
-            <ButtonContainer>
-              <Button
-                variant="GREEN"
-                icon="stop-circle"
+            <OptionContainer>
+              <Options
                 title="Sim"
-                type="SECONDARY"
-                showIcon
-                style={{ marginRight: 8 }}
+                icon="circle"
+                iconColor="IN"
+                variant={buttonVariant === "IN" ? "IN" : "DEFAULT"}
+                onPress={() => setButtonVariant("IN")}
               />
-              <Button
-                variant="RED"
-                icon="stop-circle"
+              <Options
                 title="Não"
-                type="SECONDARY"
-                showIcon
+                icon="circle"
+                iconColor="OUT"
+                variant={buttonVariant === "OUT" ? "OUT" : "DEFAULT"}
+                onPress={() => setButtonVariant("OUT")}
+                style={{ marginLeft: 12 }}
               />
-            </ButtonContainer>
+            </OptionContainer>
           </InputContainer>
         </Form>
         <Button title="Cadastrar refeição" />
