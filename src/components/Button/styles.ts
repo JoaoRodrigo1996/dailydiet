@@ -18,7 +18,7 @@ export const Container = styled(TouchableOpacity)<ButtonStyleProps>`
 
   width: 100%;
   height: 50px;
-  flex: 1;
+
   border-radius: 8px;
 
   ${({ theme, type }) =>
