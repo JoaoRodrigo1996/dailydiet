@@ -1,11 +1,9 @@
-import { Text } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 import styled, { css } from "styled-components/native";
 
-interface MealCardStyleStatusProps {
-  status: boolean;
-}
+export type MealCardStyleStatusProps = "PRIMARY" | "SECONDARY";
 
-export const Container = styled.View`
+export const Container = styled(TouchableOpacity)`
   width: 100%;
 
   border: 2px solid ${({ theme }) => theme.COLORS.GRAY_600};
@@ -55,11 +53,15 @@ export const Title = styled(Text).attrs(({ ellipsizeMode, numberOfLines }) => ({
   `}
 `;
 
-export const Status = styled.View<MealCardStyleStatusProps>`
+interface StatusProps {
+  status: MealCardStyleStatusProps;
+}
+
+export const Status = styled.View<StatusProps>`
   width: 14px;
   height: 14px;
   border-radius: 9999px;
 
   background-color: ${({ theme, status }) =>
-    status === true ? theme.COLORS.GREEN_MID : theme.COLORS.RED_MID};
+    status === "PRIMARY" ? theme.COLORS.GREEN_MID : theme.COLORS.RED_MID};
 `;

@@ -21,4 +21,10 @@ export const InputText = styled(TextInput)`
   height: 48px;
   padding: 16px;
   border-radius: 8px;
+
+  ${({ theme }) => css`
+    font-size: ${theme.FONT_SIZE.MD}px;
+    font-family: ${theme.FONT_FAMILY.REGULAR};
+    color: ${theme.COLORS.GRAY_100};
+  `}
 `;

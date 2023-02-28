@@ -1,11 +1,12 @@
 import { TouchableOpacity } from "react-native";
 
-import { MaterialIcons } from "@expo/vector-icons";
 import styled, { css } from "styled-components/native";
 
+export type OptionStyleTypeProps = "PRIMARY" | "SECONDARY";
+
 interface OptionStyleProps {
-  variant: "IN" | "OUT" | "DEFAULT";
-  iconColor?: "IN" | "OUT";
+  type: OptionStyleTypeProps;
+  isActive: boolean;
 }
 
 export const Container = styled(TouchableOpacity)<OptionStyleProps>`
@@ -14,28 +15,23 @@ export const Container = styled(TouchableOpacity)<OptionStyleProps>`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background-color: ${({ theme }) => theme.COLORS.GRAY_600};
+  background-color: ${({ theme, type, isActive }) =>
+    type === "PRIMARY" && isActive
+      ? theme.COLORS.GREEN_LIGHT
+      : type === "SECONDARY" && isActive
+      ? theme.COLORS.RED_LIGHT
+      : theme.COLORS.GRAY_600};
   border: 1px solid transparent;
+  ${({ theme, type, isActive }) =>
+    isActive &&
+    css`
+      border-color: ${type === "PRIMARY"
+        ? theme.COLORS.GREEN_DARK
+        : theme.COLORS.RED_DARK};
+    `}
 
   padding: 16px;
   border-radius: 8px;
-
-  ${({ theme, variant }) =>
-    variant === "IN"
-      ? css`
-          background-color: ${theme.COLORS.GREEN_LIGHT};
-          border: 1px solid ${theme.COLORS.GREEN_DARK};
-        `
-      : variant === "OUT"
-      ? css`
-          background-color: ${theme.COLORS.RED_LIGHT};
-          border: 1px solid ${theme.COLORS.RED_DARK};
-        `
-      : variant === "DEFAULT"
-      ? css`
-          background-color: ${({ theme }) => theme.COLORS.GRAY_600};
-        `
-      : null}
 `;
 
 export const Text = styled.Text`
@@ -47,9 +43,15 @@ export const Text = styled.Text`
   `}
 `;
 
-export const Icon = styled(MaterialIcons).attrs<OptionStyleProps>(
-  ({ theme, iconColor }) => ({
-    size: 8,
-    color: iconColor === "IN" ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK,
-  })
-)``;
+interface IconProps {
+  type: OptionStyleTypeProps;
+}
+
+export const Icon = styled.View<IconProps>`
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+
+  background-color: ${({ theme, type }) =>
+    type === "PRIMARY" ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
+`;

@@ -1,11 +1,21 @@
-import { SectionList } from "react-native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useCallback, useState } from "react";
+import { Alert, SectionList } from "react-native";
+import { getAllMeals } from "../../storage/diet/getAllMeals";
+import { MealStorageDTO } from "../../storage/diet/GroupStorageDTO";
 
 import { Button } from "../Button";
 import { MealCard } from "../MealCard";
 
 import { Container, MealDate, Title } from "./styles";
 
+interface MealsData {
+  title: string;
+  data: MealStorageDTO[];
+}
+
 export function Meals() {
+  const [meals, setMeals] = useState<MealsData[]>([]);
   const DATA = [
     {
       date: "14.02.2023",
@@ -39,19 +49,67 @@ export function Meals() {
     },
   ];
 
+  const { navigate } = useNavigation();
+
+  function handleCreateMeal() {
+    navigate("new");
+  }
+
+  async function fetchAllMeals() {
+    try {
+      const storedMeals = await getAllMeals();
+
+      const mealsFilteredByDate = storedMeals.reduce((meals, value) => {
+        const { date } = value;
+
+        if (!meals[date]) {
+          meals[date] = [];
+        }
+
+        meals[date].push(value);
+
+        return meals;
+      }, {} as Record<string, MealStorageDTO[]>);
+
+      const mealsGroupByDate = Object.keys(mealsFilteredByDate).map((date) => {
+        return { title: date, data: mealsFilteredByDate[date] };
+      });
+
+      setMeals(mealsGroupByDate);
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Dieta", "Não foi possível carregar as dietas disponíveis.");
+    }
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchAllMeals();
+    }, [])
+  );
+
   return (
     <Container>
       <Title>Refeições</Title>
-      <Button icon="add" title="Nova refeição" showIcon></Button>
+      <Button
+        icon="add"
+        title="Nova refeição"
+        showIcon
+        onPress={handleCreateMeal}
+      />
 
       <SectionList
-        sections={DATA}
-        keyExtractor={(item) => item.meal}
+        sections={meals}
+        keyExtractor={(item, index) => item.name + index}
         renderItem={({ item }) => (
-          <MealCard time={item.time} title={item.meal} status={item.status} />
+          <MealCard
+            time={item.time}
+            title={item.name}
+            status={item.status ? "PRIMARY" : "SECONDARY"}
+          />
         )}
-        renderSectionHeader={({ section: { date } }) => (
-          <MealDate>{date}</MealDate>
+        renderSectionHeader={({ section: { title } }) => (
+          <MealDate>{title}</MealDate>
         )}
         contentContainerStyle={{ paddingBottom: 100 }}
         showsVerticalScrollIndicator={false}

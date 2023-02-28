@@ -2,6 +2,7 @@ import { Button } from "../../components/Button";
 
 import successImg from "../../assets/images/success.png";
 
+import { useNavigation } from "@react-navigation/native";
 import {
   Container,
   HeadingContainer,
@@ -11,6 +12,12 @@ import {
 } from "./styles";
 
 export function Feedback() {
+  const { navigate } = useNavigation();
+
+  function handleNavigateToHomeScreen() {
+    navigate("home");
+  }
+
   return (
     <Container>
       <HeadingContainer>
@@ -18,7 +25,10 @@ export function Feedback() {
         <SubTitle>Você continua dentro da dieta. Muito bem!</SubTitle>
       </HeadingContainer>
       <ImageContainer source={successImg} />
-      <Button title="Ir para a página inicial" />
+      <Button
+        title="Ir para a página inicial"
+        onPress={handleNavigateToHomeScreen}
+      />
     </Container>
   );
 }

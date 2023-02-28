@@ -4,14 +4,13 @@ import { Container, InputText, Label } from "./styles";
 
 interface InputProps extends TextInputProps {
   label: string;
-  size?: number;
 }
 
-export function Input({ size, label, ...rest }: InputProps) {
+export function Input({ label, ...rest }: InputProps) {
   return (
-    <Container {...rest}>
+    <Container>
       <Label>{label}</Label>
-      <InputText style={{ height: size }} />
+      <InputText {...rest} />
     </Container>
   );
 }

@@ -1,25 +1,22 @@
-import { MaterialIcons } from "@expo/vector-icons";
 import { TouchableOpacityProps } from "react-native";
 
-import { Container, Icon, Text } from "./styles";
+import { Container, Icon, OptionStyleTypeProps, Text } from "./styles";
 
 interface OptionsProps extends TouchableOpacityProps {
   title: string;
-  icon: keyof typeof MaterialIcons.glyphMap;
-  iconColor?: "IN" | "OUT";
-  variant: "IN" | "OUT" | "DEFAULT";
+  isActive?: boolean;
+  type?: OptionStyleTypeProps;
 }
 
 export function Options({
   title,
-  icon,
-  variant,
-  iconColor,
+  type = "PRIMARY",
+  isActive = false,
   ...rest
 }: OptionsProps) {
   return (
-    <Container variant={variant} {...rest}>
-      <Icon name={icon} iconColor={iconColor} />
+    <Container type={type} isActive={isActive} {...rest}>
+      <Icon type={type} />
       <Text>{title}</Text>
     </Container>
   );

@@ -1,14 +1,23 @@
-import { Container, Divider, Info, Status, Time, Title } from "./styles";
+import { TouchableOpacityProps } from "react-native";
+import {
+  Container,
+  Divider,
+  Info,
+  MealCardStyleStatusProps,
+  Status,
+  Time,
+  Title,
+} from "./styles";
 
-interface MealCardProps {
+interface MealCardProps extends TouchableOpacityProps {
   time: string;
   title: string;
-  status: boolean;
+  status: MealCardStyleStatusProps;
 }
 
-export function MealCard({ time, title, status }: MealCardProps) {
+export function MealCard({ time, title, status, ...rest }: MealCardProps) {
   return (
-    <Container>
+    <Container {...rest}>
       <Info>
         <Time>{time}</Time>
         <Divider />
