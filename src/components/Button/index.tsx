@@ -8,7 +8,6 @@ interface ButtonProps extends TouchableOpacityProps {
   showIcon?: boolean;
   type?: "PRIMARY" | "SECONDARY";
 
-  variant?: "WHITE" | "RED" | "GREEN";
   icon?: keyof typeof MaterialIcons.glyphMap;
 }
 
@@ -17,13 +16,12 @@ export function Button({
   title,
   icon,
 
-  variant = "WHITE",
   type = "PRIMARY",
   ...rest
 }: ButtonProps) {
   return (
     <Container type={type} {...rest}>
-      {showIcon ? <Icon variant={variant} name={icon} /> : null}
+      {showIcon ? <Icon type={type} name={icon} /> : null}
 
       <Title type={type}>{title}</Title>
     </Container>

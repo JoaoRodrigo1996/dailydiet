@@ -19,7 +19,7 @@ export const Title = styled.Text`
   ${({ theme }) => css`
     font-family: ${theme.FONT_FAMILY.BOLD};
     font-size: ${theme.FONT_SIZE.LG}px;
-    color: ${theme.COLORS.GREEN_DARK};
+    color: ${theme.COLORS.RED_DARK};
   `}
 `;
 
@@ -30,6 +30,7 @@ export const SubTitle = styled.Text`
     color: ${theme.COLORS.GRAY_100};
   `}
   margin-top: 8px;
+  text-align: center;
 `;
 
 export const ImageContainer = styled.Image`

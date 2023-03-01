@@ -1,12 +1,23 @@
-import { Avatar, Container, Logo } from "./styles";
+import { View } from "react-native";
+import { BackButton } from "../BackButton";
+import { Container, Title } from "./styles";
 
-import dailyImg from "../../assets/logo.png";
+interface HeaderProps {
+  title: string;
 
-export function Header() {
+  type?: "PRIMARY" | "SECONDARY";
+}
+
+export function Header({
+  title,
+
+  type = "PRIMARY",
+}: HeaderProps) {
   return (
-    <Container>
-      <Logo source={dailyImg} />
-      <Avatar source={{ uri: "https://github.com/JoaoRodrigo1996.png" }} />
+    <Container type={type}>
+      <BackButton />
+      <Title>{title}</Title>
+      <View />
     </Container>
   );
 }

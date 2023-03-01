@@ -1,11 +1,10 @@
 import { ArrowLeft } from "phosphor-react-native";
 import { ScrollView, TouchableOpacity } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import styled, { css } from "styled-components/native";
 
-export const Container = styled(SafeAreaView)`
+export const Container = styled.View`
   flex: 1;
-  background-color: ${({ theme }) => theme.COLORS.GRAY_700};
+  background-color: ${({ theme }) => theme.COLORS.GRAY_600};
 `;
 
 export const Header = styled.View`
@@ -15,14 +14,15 @@ export const Header = styled.View`
   background-color: ${({ theme }) => theme.COLORS.GRAY_500};
 
   flex-direction: row;
-  align-items: center;
+
   justify-content: space-between;
+  align-items: center;
 `;
 
 export const Title = styled.Text`
   ${({ theme }) => css`
     font-size: ${theme.FONT_SIZE.LG}px;
-    font-family: ${theme.FONT_FAMILY.REGULAR};
+    font-family: ${theme.FONT_FAMILY.BOLD};
     color: ${theme.COLORS.GRAY_100};
   `}
 `;

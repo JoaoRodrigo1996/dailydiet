@@ -1,20 +1,24 @@
-import styled from "styled-components/native";
+import styled, { css } from "styled-components/native";
 
-export const Container = styled.View`
+interface HeaderStylesProps {
+  type: "PRIMARY" | "SECONDARY";
+}
+
+export const Container = styled.View<HeaderStylesProps>`
   flex-direction: row;
-  align-items: center;
+
+  height: 104px;
   justify-content: space-between;
-  margin-bottom: 32px;
+  padding: 24px;
+
+  background-color: ${({ theme, type }) =>
+    type === "PRIMARY" ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT};
 `;
 
-export const Logo = styled.Image`
-  width: 82px;
-  height: 37px;
-`;
-
-export const Avatar = styled.Image`
-  width: 40px;
-  height: 40px;
-  border: 2px solid ${({ theme }) => theme.COLORS.GRAY_200};
-  border-radius: 999px;
+export const Title = styled.Text`
+  ${({ theme }) => css`
+    font-size: ${theme.FONT_SIZE.MD}px;
+    font-family: ${theme.FONT_FAMILY.BOLD};
+    color: ${theme.COLORS.GRAY_100};
+  `}
 `;

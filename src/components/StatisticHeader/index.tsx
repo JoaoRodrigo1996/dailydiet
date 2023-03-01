@@ -3,7 +3,12 @@ import { BackButton } from "../BackButton";
 
 import { Container, SubTitle, Title } from "./styles";
 
-export function StatisticHeader() {
+interface StatisticHeaderProps {
+  title: number;
+  type: "PRIMARY" | "SECONDARY";
+}
+
+export function StatisticHeader({ title, type }: StatisticHeaderProps) {
   const { goBack } = useNavigation();
 
   function handleGoBack() {
@@ -11,9 +16,9 @@ export function StatisticHeader() {
   }
 
   return (
-    <Container type="PRIMARY">
-      <BackButton type="PRIMARY" onPress={handleGoBack} />
-      <Title>90,86%</Title>
+    <Container type={type}>
+      <BackButton type={type} onPress={handleGoBack} />
+      <Title>{title}%</Title>
       <SubTitle>das refeições dentro da dieta</SubTitle>
     </Container>
   );

@@ -1,15 +1,19 @@
-import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
+import { useCallback, useState } from "react";
 import { Alert, View } from "react-native";
-
+import { BackButton } from "../../components/BackButton";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Form/Input";
 import { Options } from "../../components/Form/Options";
-import { createDiet } from "../../storage/diet/createDiet";
+import { editMealByName } from "../../storage/diet/editMealByName";
+import { getAllMeals } from "../../storage/diet/getAllMeals";
+import { MealStorageDTO } from "../../storage/diet/GroupStorageDTO";
 import { AppError } from "../../utils/AppError";
-
 import {
-  BackButton,
   Container,
   Content,
   DateTimeContainer,
@@ -22,30 +26,54 @@ import {
   Title,
 } from "./styles";
 
-export function NewDiet() {
+interface RouteParams {
+  mealName: string;
+}
+
+export function EditMeal() {
+  const [meal, setMeal] = useState<MealStorageDTO>({} as MealStorageDTO);
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
 
-  const [diet, setDiet] = useState(false);
+  const [diet, setDiet] = useState<boolean | null>(null);
 
   const { navigate, goBack } = useNavigation();
 
-  async function handleCreateMeal() {
-    try {
-      if (name.trim().length === 0) {
-        return Alert.alert("Noava refeição", "Informe o nome da refeição.");
-      }
+  const route = useRoute();
+  const { mealName } = route.params as RouteParams;
 
+  function handleGoBack() {
+    goBack();
+  }
+
+  async function fetchMeal() {
+    try {
+      const storedMeals = await getAllMeals();
+      const meal =
+        storedMeals.find((meal) => meal.name === mealName) ??
+        ({} as MealStorageDTO);
+
+      setMeal(meal);
+      setDiet(meal.status);
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Editar refeição", "Não foi possível editar a refeição");
+    }
+  }
+
+  async function handleEditMeal() {
+    try {
       if (diet === null) {
         return Alert.alert(
-          "Nova refeição",
-          "Informe se a refeição está ou não dentro da dieta."
+          "Editar refeição",
+          "Selecione se sua refeição está dentro ou fora da dieta."
         );
       }
 
-      const newDiet = {
+      const newMealEdited = {
         name,
         description,
         date,
@@ -53,25 +81,26 @@ export function NewDiet() {
         status: diet,
       };
 
-      await createDiet(newDiet);
+      await editMealByName(mealName, newMealEdited);
 
-      navigate("feedback");
+      console.log(`meal - ${meal}`);
+
+      navigate("meal", { name });
     } catch (error) {
       if (error instanceof AppError) {
-        return Alert.alert("Nova refeição", error.message);
+        Alert.alert("Editar refeição", error.message);
       } else {
+        Alert.alert("Editar refeição", "Não foi possível editar refeição");
         console.log(error);
-        return Alert.alert(
-          "Nova refeição",
-          "Não foi possível criar uma nova refeição"
-        );
       }
     }
   }
 
-  function handleGoBack() {
-    goBack();
-  }
+  useFocusEffect(
+    useCallback(() => {
+      fetchMeal();
+    }, [mealName])
+  );
 
   return (
     <Container>
@@ -79,18 +108,18 @@ export function NewDiet() {
         <BackButton onPress={handleGoBack}>
           <Icon />
         </BackButton>
-        <Title>Nova refeição</Title>
+        <Title>Editar refeição</Title>
         <View />
       </Header>
       <Content contentContainerStyle={{ paddingBottom: 100 }}>
         <Form>
-          <Input label="Nome" value={name} onChangeText={setName} />
+          <Input label="Nome" defaultValue={meal.name} onChangeText={setName} />
           <Input
             label="Descrição"
             multiline={true}
             numberOfLines={4}
             style={{ height: 120, textAlignVertical: "top" }}
-            value={description}
+            defaultValue={meal.description}
             onChangeText={setDescription}
           />
 
@@ -98,10 +127,14 @@ export function NewDiet() {
             <Input
               label="Data"
               style={{ marginRight: 12 }}
-              value={date}
+              defaultValue={meal.date}
               onChangeText={setDate}
             />
-            <Input label="Hora" value={time} onChangeText={setTime} />
+            <Input
+              label="Hora"
+              defaultValue={meal.time}
+              onChangeText={setTime}
+            />
           </DateTimeContainer>
 
           <InputContainer>
@@ -122,7 +155,7 @@ export function NewDiet() {
             </OptionContainer>
           </InputContainer>
         </Form>
-        <Button title="Cadastrar refeição" onPress={handleCreateMeal} />
+        <Button title="Salvar alterações" onPress={handleEditMeal} />
       </Content>
     </Container>
   );

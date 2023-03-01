@@ -15,7 +15,13 @@ interface MealCardProps extends TouchableOpacityProps {
   status: MealCardStyleStatusProps;
 }
 
-export function MealCard({ time, title, status, ...rest }: MealCardProps) {
+export function MealCard({
+  time,
+  title,
+  status,
+
+  ...rest
+}: MealCardProps) {
   return (
     <Container {...rest}>
       <Info>

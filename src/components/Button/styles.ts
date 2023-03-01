@@ -8,7 +8,7 @@ interface ButtonStyleProps {
 }
 
 interface IconStyleProps {
-  variant: "WHITE" | "RED" | "GREEN";
+  type: "PRIMARY" | "SECONDARY";
 }
 
 export const Container = styled(TouchableOpacity)<ButtonStyleProps>`
@@ -28,18 +28,14 @@ export const Container = styled(TouchableOpacity)<ButtonStyleProps>`
         `
       : css`
           background-color: ${theme.COLORS.GRAY_600};
+          border: 1px solid ${theme.COLORS.GRAY_100};
         `};
 `;
 
 export const Icon = styled(MaterialIcons).attrs<IconStyleProps>(
-  ({ theme, variant }) => ({
+  ({ theme, type }) => ({
     size: 18,
-    color:
-      variant === "GREEN"
-        ? theme.COLORS.GREEN_DARK
-        : variant === "RED"
-        ? theme.COLORS.RED_DARK
-        : theme.COLORS.WHITE,
+    color: type === "PRIMARY" ? theme.COLORS.WHITE : theme.COLORS.GRAY_100,
     weight: "bold",
   })
 )`

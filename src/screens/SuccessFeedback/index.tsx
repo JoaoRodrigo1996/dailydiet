@@ -11,7 +11,7 @@ import {
   Title,
 } from "./styles";
 
-export function Feedback() {
+export function SuccessFeedback() {
   const { navigate } = useNavigation();
 
   function handleNavigateToHomeScreen() {

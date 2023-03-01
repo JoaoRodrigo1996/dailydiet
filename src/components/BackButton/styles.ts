@@ -10,6 +10,6 @@ export const Container = styled.TouchableOpacity``;
 export const Icon = styled(ArrowLeft).attrs<BackButtonStyleProps>(
   ({ theme, type }) => ({
     size: 24,
-    color: type === "PRIMARY" ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK,
+    color: theme.COLORS.GRAY_100,
   })
 )``;
