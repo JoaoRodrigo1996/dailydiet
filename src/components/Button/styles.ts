@@ -11,14 +11,13 @@ interface IconStyleProps {
   type: "PRIMARY" | "SECONDARY";
 }
 
-export const Container = styled(TouchableOpacity)<ButtonStyleProps>`
+export const Container = styled(TouchableOpacity) <ButtonStyleProps>`
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-
-  width: 100%;
+  justify-content: center;   
+  
   height: 50px;
-
+  
   border-radius: 8px;
 
   ${({ theme, type }) =>

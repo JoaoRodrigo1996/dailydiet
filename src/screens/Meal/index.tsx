@@ -4,7 +4,7 @@ import {
   useRoute,
 } from "@react-navigation/native";
 import { useCallback, useState } from "react";
-import { Alert } from "react-native";
+import { Alert, Modal, Text, View } from "react-native";
 import { Button } from "../../components/Button";
 
 import { Header } from "../../components/Header";
@@ -15,6 +15,7 @@ import { removeMeal } from "../../storage/diet/removeMeal";
 
 import {
   Actions,
+  CenteredModalView,
   Container,
   Content,
   DateAndTime,
@@ -23,6 +24,9 @@ import {
   Icon,
   MealInfo,
   MealStatus,
+  ModalButton,
+  ModalText,
+  ModalView,
   Status,
   Title,
 } from "./styles";
@@ -32,6 +36,7 @@ interface RouteParams {
 }
 
 export function Meal() {
+  const [modalVisible, setModalVisible] = useState(false);
   const [meal, setMeal] = useState<MealStorageDTO>({} as MealStorageDTO);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -68,13 +73,6 @@ export function Meal() {
       console.log(error);
       Alert.alert("Remover refeição", "Não foi possível remover a refeição.");
     }
-  }
-
-  async function handleRemoveMeal() {
-    Alert.alert("Remover refeição", "Deseja remover esta refeição", [
-      { text: "Não", style: "cancel" },
-      { text: "Sim", onPress: () => removeMealByName() },
-    ]);
   }
 
   useFocusEffect(
@@ -119,9 +117,29 @@ export function Meal() {
               showIcon
               icon="restore"
               type="SECONDARY"
-              onPress={handleRemoveMeal}
+              onPress={() => setModalVisible(true)}
             />
           </Actions>
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert('Modal has been closed.');
+              setModalVisible(!modalVisible);
+            }}
+            onDismiss={removeMealByName}
+          >
+            <ModalView>
+              <CenteredModalView>
+                <ModalText>Deseja realmente excluir o{'\n'} registro da refeição?</ModalText>
+                <ModalButton>
+                  <Button onPress={() => setModalVisible(!modalVisible)} title="Cancelar" type="SECONDARY" style={{ marginRight: 12, flex: 1 }} />
+                  <Button onPress={() => removeMealByName()} title="Sim, excluir" style={{ flex: 1 }} />
+                </ModalButton>
+              </CenteredModalView>
+            </ModalView>
+          </Modal>
         </Content>
       )}
     </Container>

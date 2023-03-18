@@ -6,7 +6,7 @@ interface MealContainerStyleProps {
   type: "PRIMARY" | "SECONDARY";
 }
 
-export const Container = styled(SafeAreaView)<MealContainerStyleProps>`
+export const Container = styled(SafeAreaView) <MealContainerStyleProps>`
   flex: 1;
   background-color: ${({ theme, type }) =>
     type === "PRIMARY" ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT};
@@ -90,3 +90,35 @@ export const MealStatus = styled.Text`
 `;
 
 export const Actions = styled.View``;
+
+export const ModalView = styled.View`
+  flex: 1;
+  background-color: rgba(0,0,0,0.25);
+
+  align-items: center;
+  justify-content: center;
+  
+`;
+
+export const CenteredModalView = styled.View`
+  background-color: ${({ theme }) => theme.COLORS.GRAY_600};
+  padding: 24px;
+  width: 327px;
+  border-radius: 8px;
+`
+
+export const ModalText = styled.Text`
+  text-align: center;
+  ${({ theme }) => css`
+    font-size: ${theme.FONT_SIZE.LG}px;
+    font-family: ${theme.FONT_FAMILY.REGULAR};
+    color: ${theme.COLORS.GRAY_100}
+  `}
+`
+
+export const ModalButton = styled.View`
+  margin-top: 32px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`
