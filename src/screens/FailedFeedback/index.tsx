@@ -31,6 +31,7 @@ export function FailedFeedback() {
       <Button
         title="Ir para a página inicial"
         onPress={handleNavigateToHomeScreen}
+        style={{ width: '100%' }}
       />
     </Container>
   );
